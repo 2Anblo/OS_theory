@@ -1,0 +1,20 @@
+1. (简答题) In Fig. 2-2, three process states are shown. In theory, with three states, there could be six transitions, two out of each state. However, only four transitions are shown. Are there any circumstances in which either or both of the missing transitions might occur?
+There is no circumstance that either of the missing transitions might occur.
+First, the transition from blocked to running is impossible. Supposed that a process is blocked, it is waiting for the inputs. After all inputs are accepted, the process should go back to the ready state and wait in a queue. Only if there is no other processes waiting in the ready queue, the blocked process may quickly go through ready state and enter the running state.
+Second, the transition from ready to blocked is impossible. Let's say there is a process at the running state. Other processes just need to wait in the ready queue and don't have to accept any input. And if there is no process running, it can just directly enter the running state. There no need to transit from ready state to blocked state.
+2. (简答题) Multiple jobs can run in parallel and finish faster than if they had run sequentially. Suppose that two jobs, each of which needs 20 minutes of CPU time, start simultaneously. How long will the last one take to complete if they run sequentially? How long if they run in parallel? Assume 50% I/O wait.
+The last one will finish 80 minutes after the first one start, if they run sequentially.
+20/0.5*2=80 minutes.
+It will take 53.33 minutes if they run in parallel.
+CPU utilization = 1 - 0.5^2 = 0.75
+20/0.75*2 = 53.33 minutes 
+3. (简答题) In Fig.2-8, a multithreaded Web server is shown. If the only way to read from a file is the normal blocking read system call, do you think user-level threads or kernel-level threads are being used for the Web server? Why?
+I think kernel-level threads are being used for the Web server.
+In Fig.2-8, a worker thread will block when it has to read a Web page from the disk. Using user-level threads, the whole process will block, multithreading's effectiveness will be destroyed. However, using kernel-level threads will not block the whole process when a particular thread blocks, the kernel can run either another thread from the same process or a thread from a different process.
+
+
+
+
+4. (简答题) Can a thread ever be preempted by a clock interrupt?  If so, under what circumstances? If not, why not?
+User-level threads cannot be preempted by the clock,  because user-level threads are managed by the application and are not directly controlled by the operating system's scheduler. The operating system is not aware of user-level threads, and it only sees the entire process as a single execution context.
+Kernel-level threads can be preempted individually. If a thread runs too long, the clock will interrupt the current process and the current thread. The kernel is free to pick a different thread from the same process to run even a thread from diffenrent process.

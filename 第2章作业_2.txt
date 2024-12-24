@@ -1,0 +1,78 @@
+1. (简答题) Does Peterson’s solution to the mutual exclusion problem shown in Fig. 2-24 work when process scheduling is preemptive? How about when it is non-preemptive?
+Yes, Peterson's solution does work in preemptive scheduling.	In my opinion, Peterson's solution might fail when it is scheduled using a non-preemptive method. Let's say, 'turn' is now '1', and interested[0] == true. It will never release the CPU in the while loop and cause a deadlock.
+
+
+2. (简答题) Measurements of a certain system have shown that the average process runs for a time T before blocking on I/O. A process switch requires a time S, which is effectively wasted (overhead). For round-robin scheduling with quantum Q, give a formula for the CPU efficiency for each of the following:
+(a) Q = ∞;(b) Q > T ;(c) S<Q<T; (d) Q = S;(e) Q nearly 0
+
+CPU Efficiency= Total CPU Time/Useful CPU Time
+​
+(a) Efficiency = T/T = 100%
+(b) Efficiency = T/T = 100%
+(c) Efficiency =  T/(T+S*T/Q) = 1/(1+S/Q) = Q/Q+S 
+	Because Q>S, Efficiency>50%.	Finally, the Efficiency is between 50% and 100%.
+(d) Efficiency =  T/(T+S*T/Q) = 1/(1+S/Q) = Q/Q+S = 50%
+(e)  Efficiency =  T/(T+S*T/Q) = 1/(1+S/Q) = Q/Q+S nearly 0. 
+
+3. (简答题) Five batch jobs A through E, arrive at a computer center at almost the same time. They have estimated running times of 10, 6, 2, 4, and 8 minutes. Their (externally determined) priorities are 3, 5, 2, 1, and 4, respectively, with 5 being the highest priority. For each of the following scheduling algorithms, determine the mean process turnaround time. Ignore process switching overhead.
+(a) Round robin.
+
+(b) Priority scheduling.
+
+(c) First-come, first-served (run in order 10, 6, 2, 4, 8).
+
+(d) Shortest job first.
+
+For (a), assume that the system is multiprogrammed and that each job gets its fair share of the CPU. For (b) through (d) assume that only one job at a time runs, until it finishes. All jobs are completely CPU bound.
+(a) Assume that quantum in this case is 1 minute, so that we can switch only once for each job. It has to take 10 rounds in order of A to E.
+	In the first round, each job runs for 1 minute.
+	Remaining times: A = 9, B = 5, C = 1, D = 3, E = 7
+	In the second round, each job runs for 1 minute again.
+	Remaining times: A = 8, B = 4, C = 0, D = 2, E = 6
+	Job C finishes at time 8.
+	In the third round, each job runs for 1 minute.
+	Remaining times: A = 7, B = 3, D = 1, E = 5
+	Remaining times: A = 6, B = 2, D = 0, E = 4
+	Job D finishes at time 17.
+
+	Remaining times: A = 5, B = 1, E = 3
+	Remaining times: A = 4, B = 0, E = 2
+	Job B finishes at time 23.
+	Remaining times: A = 3, E = 1
+	Remaining times: A = 2, E = 0
+	Job B finishes at time 28.
+	Remaining times: A = 1
+	Remaining times: A = 0
+	Job A finishes at time 30.
+	Mean Turnaround Time = 8+17+23+28+30/5 = 21.2min
+(b) Priority scheduling.
+	B->E->A->C->D
+Job B finishes at time 6.
+Job E finishes at time 14.
+Job A finishes at time 24.
+Job C finishes at time 26.
+Job D finishes at time 30.
+	Mean Turnaround Time = 6+14+24+26+30/5 = 20min
+
+(c) First-come, first-served (run in order 10, 6, 2, 4, 8).
+Job A finishes at time 10.
+Job B finishes at time 16.
+Job C finishes at time 18.
+Job D finishes at time 22.
+Job E finishes at time 30.
+	Mean Turnaround Time = 10+16+18+22+30/5 = 19.2min
+
+(d) Shortest job first.
+
+Job C finishes at time 2.
+Job D finishes at time 6.
+Job B finishes at time 12.
+Job E finishes at time 20.
+Job A finishes at time 30.
+	Mean Turnaround Time = 2+6+12+20+30/5 = 14min
+
+4. (简答题) A soft real-time system has four periodic events with periods of 50, 100, 200, and 250 msec each. Suppose that the four events require 35, 20, 10, and x msec of CPU time, respectively. What is the largest value of x for which the system is schedulable?
+
+Because 35/50+20/100+10/200+x/250 <= 1, x's maximum value is 12.5.
+
+
